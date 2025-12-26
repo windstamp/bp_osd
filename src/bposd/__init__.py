@@ -10,3 +10,5 @@ def get_include():
 
 with open(f"{get_include()}/VERSION", "r") as f:
     __version__ = f.read()
+
+print(f"[bposd] Using LOCAL compiled version {__version__} from {get_include()}")
