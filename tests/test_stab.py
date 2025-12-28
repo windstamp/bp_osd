@@ -20,3 +20,6 @@ def test_stab_five_qubit_code():
     assert qcode.K == 1
 
     assert qcode.compute_code_distance() == 3
+
+if __name__ == "__main__":
+    test_stab_five_qubit_code()

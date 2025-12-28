@@ -82,11 +82,13 @@ class hgp(css_code):
         else:
             self.D = None
 
-        def print_code_parameters(self):
-            if self.D == None:
-                print(f"[[{self.N},{self.K},d]]")
-            else:
-                print(f"[[{self.N},{self.K},{self.D}]]")
+        self.compute_weights()
+
+    def print_code_parameters(self):
+        if self.D == None:
+            print(f"[[{self.N},{self.K},d]]")
+        else:
+            print(f"[[{self.N},{self.K},{self.D}]]")
 
 
 class hgp_single(hgp):

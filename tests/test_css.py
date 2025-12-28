@@ -7,6 +7,10 @@ import ldpc.codes
 
 def test_css_code_steane():
     h = ldpc.codes.hamming_code(3)
+    print(f'type(h): {type(h)}')
+    print(f'h.shape: {h.shape}')
+    # print(f'h: {h}')
+    print(f'h: {h.toarray()}')
 
     qcode = css_code(hx=h, hz=h, code_distance=3, name="Steane code")
 
@@ -17,6 +21,9 @@ def test_css_code_steane():
     assert qcode.test()
 
     h = ldpc.codes.hamming_code(3).toarray()
+    print(f'type(h): {type(h)}')
+    print(f'h.shape: {h.shape}')
+    print(f'h: {h}')
 
     qcode = css_code(hx=h, hz=h, code_distance=3, name="Steane code")
 
@@ -25,3 +32,6 @@ def test_css_code_steane():
     assert qcode.D == 3
 
     assert qcode.test()
+
+if __name__ == "__main__":
+    test_css_code_steane()

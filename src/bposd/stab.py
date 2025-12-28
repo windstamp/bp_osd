@@ -53,6 +53,8 @@ class stab_code:
         rankH = mod2.rank(self.h)
 
         log_stack = scipy.sparse.vstack([self.h, ker_H])
+        # Convert to CSR format to support row indexing
+        log_stack = log_stack.tocsr()
         pivots = mod2.pivot_rows(log_stack)[rankH:]
         self.l = log_stack[pivots]
         self.lx = self.l[:, 0 : self.N]

@@ -133,7 +133,7 @@ class css_decode_sim:
 
         # random number generator setup
         if self.seed == 0 or self.run_count != 0:
-            self.seed = np.random.randint(low=1, high=2**32 - 1)
+            self.seed = np.random.randint(low=1, high=2**31 - 1)
         np.random.seed(self.seed)
         print(f"RNG Seed: {self.seed}")
 

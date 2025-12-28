@@ -40,6 +40,7 @@ class css_code:
         if nx != 0:
             self.compute_dimension()
             self.compute_logicals()
+            self.compute_weights()
 
         self.name = name
 
@@ -49,6 +50,25 @@ class css_code:
 
         self.K = self.N - mod2.rank(self.hx) - mod2.rank(self.hz)
         return self.K
+
+    def compute_weights(self):
+        """Compute max column weight (L) and max row weight (Q) from hx and hz."""
+        # Max column weight: maximum of the max column weights in hx and hz separately
+        # L represents the maximum variable node degree in either parity check matrix
+        hx_col_weights = np.asarray(self.hx.sum(axis=0)).flatten()
+        hz_col_weights = np.asarray(self.hz.sum(axis=0)).flatten()
+        hx_max_col = int(np.max(hx_col_weights)) if hx_col_weights.size > 0 else 0
+        hz_max_col = int(np.max(hz_col_weights)) if hz_col_weights.size > 0 else 0
+        self.L = max(hx_max_col, hz_max_col)
+        
+        # Max row weight: maximum number of 1s in any row across both hx and hz
+        # Q represents the maximum check node degree among all stabilizer checks
+        hx_row_weights = np.asarray(self.hx.sum(axis=1)).flatten()
+        hz_row_weights = np.asarray(self.hz.sum(axis=1)).flatten()
+        all_row_weights = np.concatenate([hx_row_weights, hz_row_weights])
+        self.Q = int(np.max(all_row_weights)) if all_row_weights.size > 0 else 0
+        
+        return self.L, self.Q
 
     def to_stab_code(self):
         hx = scipy.sparse.vstack([np.zeros(self.hz.shape, dtype=np.uint8), self.hx])
